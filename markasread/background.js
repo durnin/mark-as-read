@@ -112,13 +112,13 @@ chrome.runtime.onMessage.addListener(function (msg) {
 });
 
 function removeUrl(url) {
-	console.log("Remove URL")
+	console.log("Remove URL");
 	var key = getKey(url);
-	console.log(`Key ${key}`)
-	var path = url.replace(key, '');
-	console.log(`Path ${path}`)
+	console.log(`Key ${key}`);
+	var path = getPathFromUrlAndKey(url, key);
+	console.log(`Path ${path}`);
 	const index = visited[key].indexOf(path);
-	console.log(`Index ${index}`)
+	console.log(`Index ${index}`);
 	if (index > -1) {
 		visited[key].splice(index, 1);
 	}
@@ -131,7 +131,7 @@ function markedAsRead(url) {
 	if(url) {
 		var key = getKey(url);
 		if(visited[key]) {
-			var path = url.replace(key, '');
+			var path = getPathFromUrlAndKey(url, key);
 			return visited[key].includes(path);
 		}		
 	}
@@ -139,11 +139,11 @@ function markedAsRead(url) {
 }
 
 function addUrl(url){
-	console.log("Add URL")
+	console.log("Add URL");
 	var key = getKey(url);
-	console.log(`Key ${key}`)
-	var path = url.replace(key, '');
-	console.log(`Path ${path}`)
+	console.log(`Key ${key}`);
+	var path = getPathFromUrlAndKey(url, key)
+	console.log(`Path ${path}`);
 	if(visited[key]) {
 		visited[key].push(path);
 	} else {
@@ -153,4 +153,12 @@ function addUrl(url){
 
 function getKey(url) {
 	return new URL(url).origin;
+}
+
+function getPathFromUrlAndKey(url, key) {
+	var path = url.replace(key, '');
+	if (key == 'https://apartamento.mercadolibre.com.uy') {
+		path = path.split('#')[0];
+	}
+	return path;
 }

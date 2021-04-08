@@ -26,8 +26,14 @@
     "tabs", 
     "storage", 
     "downloads", 
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "http://*/",
+    "https://*/"
   ],
+  "content_scripts": [{
+    "matches": ["https://listado.mercadolibre.com.uy/*"],
+    "js": ["changeLinkColor.js"]
+  }],
   "options_page": "options.html"
 }
 
